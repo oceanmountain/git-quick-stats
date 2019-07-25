@@ -546,11 +546,11 @@ function changelogs() {
         --date=short "${_author}" $_since $_until $_pathspec \
         | sort -u -r | head -n $_limit \
         | while read DATE; do
-              echo -e "\n[$DATE]"
               GIT_PAGER=cat git -c log.showSignature=false log \
                                 --use-mailmap --no-merges \
                                 --format=" * %s (%aN)" "${_author}" \
                                 --since=$DATE --until=$next
+              echo -e "\n[$DATE]"
               next=$DATE
           done
 }
@@ -572,14 +572,14 @@ function changelogsMerges() {
         --use-mailmap \
         --merges \
         --format="%cd" \
-        --date=short "${_author}" $_since $_until $_pathspec \
+        --date=short $_since $_until $_pathspec \
         | sort -u -r | head -n $_limit \
         | while read DATE; do
-              echo -e "\n[$DATE]"
               GIT_PAGER=cat git -c log.showSignature=false log \
                                 --use-mailmap --merges \
-                                --format=" * %s (%aN)" "${_author}" \
+                                --format=" * %s " \
                                 --since=$DATE --until=$next
+              echo -e "\n[$DATE]"
               next=$DATE
           done
 }
